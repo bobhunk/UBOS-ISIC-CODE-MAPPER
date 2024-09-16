@@ -1,0 +1,6 @@
+streamlit
+pandas
+openpyxl
+qdrant-client
+sentence-transformers
+
