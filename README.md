@@ -5,17 +5,25 @@ This project provides a web interface for mapping industry descriptions to ISIC 
 ### Features
 
 Batch Processing: Efficiently encodes industry descriptions and upserts data into the Qdrant vector database using SentenceTransformers.
+
 File Upload: Supports uploading files in Excel (.xlsx) and CSV formats, which contain industry descriptions for processing.
+
 ISIC Code Mapping: The application maps industries and descriptions to the top 3 most relevant ISIC codes using cosine similarity.
+
 Download Processed Data: After processing, users can download the mapped ISIC codes as an Excel or CSV file.
+
 Time Tracking: Displays the time taken to load ISIC data and process files.
 
 ### Technologies Used
 
 Streamlit - For building the web interface.
+
 Qdrant - A vector search engine to store and search vector embeddings.
+
 SentenceTransformers - To encode industry descriptions into vector embeddings.
+
 Pandas - For data manipulation and processing.
+
 OpenAI - For semantic search and vector comparisons (optional, if integrated for fine-tuning).
 
 ### How It Works
