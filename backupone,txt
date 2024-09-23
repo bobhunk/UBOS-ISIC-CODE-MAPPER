@@ -57,6 +57,7 @@ def show_progress_bar(message, current, total):
     st.write(f"{message}: {int(progress_value * 100)}% complete.")
 
 # Load and encode ISIC data
+@st.cache_resource
 def load_and_encode_isic_data(isic_data_path, qdrant, encoder):
     start_time = time.time()
 
