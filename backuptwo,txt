@@ -23,18 +23,18 @@ def initialize_qdrant_and_encoder():
     return qdrant, encoder
 
 # Batch encoding with progress display
-def encode_in_batches(text_data, encoder, batch_size=128):
+def encode_in_batches(text_data, _encoder, batch_size=128):
     vectors = []
     for i in range(0, len(text_data), batch_size):
         batch = text_data[i:i + batch_size]
-        batch_vectors = encoder.encode(batch).tolist()
+        batch_vectors = _encoder.encode(batch).tolist()
         vectors.extend(batch_vectors)
         # Show progress for encoding
         show_progress_bar("Encoding data", i + batch_size, len(text_data))
     return vectors
 
 # Upsert in batches to Qdrant
-def upsert_in_batches(vectors, qdrant, data_dict, batch_size=128):
+def upsert_in_batches(vectors, _qdrant, data_dict, batch_size=128):
     for i in range(0, len(vectors), batch_size):
         batch = [
             models.PointStruct(
@@ -46,7 +46,7 @@ def upsert_in_batches(vectors, qdrant, data_dict, batch_size=128):
                 }
             ) for j in range(i, min(i + batch_size, len(vectors)))
         ]
-        qdrant.upsert(collection_name="industries", points=batch)
+        _qdrant.upsert(collection_name="industries", points=batch)
         # Show progress for upserting
         show_progress_bar("Upserting vectors to Qdrant", i + batch_size, len(vectors))
 
@@ -57,8 +57,7 @@ def show_progress_bar(message, current, total):
     st.write(f"{message}: {int(progress_value * 100)}% complete.")
 
 # Load and encode ISIC data
-@st.cache_resource
-def load_and_encode_isic_data(isic_data_path, qdrant, encoder):
+def load_and_encode_isic_data(isic_data_path, _qdrant, _encoder):
     start_time = time.time()
 
     data_df = pd.read_excel(isic_data_path, sheet_name='Sheet1')

@@ -11,7 +11,7 @@ import traceback
 # Initialize the Qdrant client and SentenceTransformer model
 @st.cache_resource
 def initialize_qdrant_and_encoder():
-    encoder = SentenceTransformer("all-mpnet-base-v2")
+    encoder = SentenceTransformer("paraphrase-MiniLM-L6-V2")
     qdrant = QdrantClient(":memory:")
     qdrant.recreate_collection(
         collection_name="industries",
@@ -57,7 +57,8 @@ def show_progress_bar(message, current, total):
     st.write(f"{message}: {int(progress_value * 100)}% complete.")
 
 # Load and encode ISIC data
-def load_and_encode_isic_data(isic_data_path, qdrant, encoder):
+@st.cache_resource
+def load_and_encode_isic_data(isic_data_path, _qdrant, _encoder):
     start_time = time.time()
 
     data_df = pd.read_excel(isic_data_path, sheet_name='Sheet1')
